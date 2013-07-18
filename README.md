@@ -3,6 +3,15 @@ OneRoomSchool
 
 A JavaScript-based tutorial generator for making easy to read browser-based programming tutorials
 
+Dependencies for this web app include:
+
+json2.js
+jQuery (I used version 1.10.1)
+Rangy's core file
+Rangy's CSS Class Applier file
+Underscore.js
+Backbone.js
+
 The code from this tutorial generator is currently made to write programming tutorials with both
 text and code pages in slide show format, which can be encoded in JSON by clicking the "Get JSON"
 button.
