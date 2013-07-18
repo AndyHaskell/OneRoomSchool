@@ -1,0 +1,143 @@
+/* General-purpose classes */
+.invisible{
+    display: none;
+}
+.gray{
+    color: #555555;
+}
+.black{
+    color: #000000;
+}
+.sans-serif{
+    font-family: sans-serif;
+}
+
+/* Main tutorial */
+body{
+    margin:      0;
+    font-family: sans-serif;
+}
+#display-title{
+    margin:           0;
+    padding:          1em 0 .5em 1em;
+    background-color: #DDDDDD;
+    color:            #333333;
+}
+
+/* Rangy highlighting */
+#select-code-screen::selection{
+    color: #00FF00;
+}
+#select-code-screen::-moz-selection{
+    color: #00FF00;
+}
+#select-code-screen::-webkit-selection{
+    color: #00FF00;
+}
+.selected{
+    color: #00FF00;
+}
+
+/* Page divs */
+#current-page{
+    background-color: #DDDDDD;
+}
+.code-screen{
+    padding:          0 0 0 1em;
+    background-color: #000000;
+    color:            #555555;
+    font-size:        20px;
+    font-family:      monospace;
+}
+#subpages{
+    padding: 0 0 0 1em;
+}
+#current-subpage{
+    background-color: #DDDDDD;
+}
+
+/* Buttons */
+.nav-button{
+    width:                 9%;
+    padding:               .3em .2em .3em .2em;
+    margin:                .3em .2em .3em .2em;
+    display:               inline-block;
+    background-color:      #00CC00;
+    text-align:            center;
+    border-radius:         7px;
+    -moz-border-radius:    7px;
+    -webkit-border-radius: 7px;
+}
+.nav-button:hover{
+    background-color: #00EE00;
+}
+.new-page-button, #get-json{
+    width:            10%;
+    background-color: #00CCCC;
+}
+.new-page-button:hover, #get-json:hover{
+    background-color: #00EEEE;
+}
+.delete-button{
+    background-color: #CC0000;
+}
+.delete-button:hover{
+    background-color: #EE0000;
+}
+#exit-json{
+    width: 12%;
+}
+
+/* Headers */
+#no-pages{
+    text-align: center;
+    font-size:  2.1em;
+    color:      #333333;
+}
+#no-subpages{
+    text-align: center;
+    font-size:  1.8em;
+    color:      #333333;
+}
+#title-header{
+    font-size:   2.4em;
+    font-weight: bold;
+}
+
+
+/* Control panels */
+.page-control-panel{
+    margin: 0 0 .5em 2%;
+}
+#main-toolbar{
+    padding:          .5em .5em .5em .5em;
+    background-color: #EEEEEE;
+}
+
+/* Input */
+#set-title{
+    margin:           0;
+    padding:          1em 0 .5em 5%;
+    background-color: #DDDDDD;
+    color:            #333333;
+}
+textarea{
+    width:  90%;
+    margin: 1em 0 .5em 5%;
+}
+#input-desc, #input-title{
+    width: 90%;
+    margin: .2em 0 0 0;
+}
+#input-title{
+    font-size:  2.4em;
+    font-weight: bold;
+}
+#page-text{
+    width:  90%;
+    margin: 1em 0 .6em 5%;
+}
+#tutorial-json-textarea{
+    background-color: #000000;
+    color:            #00FF00;
+}
