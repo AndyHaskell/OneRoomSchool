@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OneRoomSchool Tutorial Generator</title>
+        <link rel = "stylesheet" href = "css/style.css">
+
+        <script id = "slideshow-template" type = "text/template">
+            <div id = "set-title">
+                <input id = "input-title" value = "<%= title %>"/><br>
+                <textarea id = "input-desc" class = "sans-serif"
+                    rows = "5"><%= desc %></textarea><br>
+                <p id = "save-title" class = "nav-button">Save</p>
+                <p id = "cancel-title" class = "nav-button">Cancel</p>
+            </div>
+            <div id = "slideshow-main">
+                <div id = "display-title" class = "invisible">
+                    <div id = "title-header"><%= title %></div>
+                    <p id = "edit-title" class = "nav-button">Edit title</p>
+                </div>
+                <div id = "main-toolbar">
+                    <div id = "pages"></div>
+                    <div id = "new-page-toolbar">
+                        <p id = "new-text-page"
+                            class = "new-page-button nav-button"
+                            data-page-type = "text">New text page</p>
+                        <p id = "new-code-page" class = "new-page-button nav-button"
+                            data-page-type = "code">New code page</p>
+                        <p id = "get-json" class = "nav-button"
+                            data-page-type = "json">Get JSON</p>                    
+                    </div>
+                </div>
+                <div id = "current-page" class = "invisible"></div>
+            </div>
+            <div id = "tutorial-json" class = "invisible"></div>
+        </script>
+    
+        <script id = "pages-template" type = "text/template">
+            <div id = "no-pages"><%= noPages ? "Your tutorial has no pages" :
+                                               "" %></div>
+            <div id = "page-list"><%= pageButtons %></div>
+        </script>
+    
+        <script id = "subpages-template" type = "text/template">
+            <div id = "no-subpages"><%= noSubpages ? "Your page has no subpages" :
+                                                      "" %></div>
+            <div id = "subpage-list"><%= subpageButtons %></div>
+        </script>
+    
+        <script id = "page-template" type = "text/template">
+            <div id = "page">
+                <% if(page.get("pageType") == "code"){ %>
+                <%=    "<div id = 'subpages'></div>" +
+                       "<div class = 'code-screen'>" +
+                       codeToHTML(page.get("code")) + "</div>" %>
+                <% }
+                   if(page.get("pageType") == "text"){ %>
+                   <%= "<textarea id = 'page-text' class = 'sans-serif' " +
+                       "rows = '15'>" + page.get("text") + "</textarea>" %><%
+                   }%>
+            </div>
+            <%= page.get("pageType") == "code" ?
+                    "<div id = 'current-subpage'></div>" : "" %>
+            <div id = "page-control-panel" class = "page-control-panel">
+                <%= page.get("pageType") == "text" ?
+                    "<p id = 'save-page' class = 'nav-button'>Save edit</p>" : "" %>
+                <%= page.get("pageType") == "code" ?
+                    "<p id = 'new-subpage' class = 'nav-button' >Add subpage</p>" :
+                    "" %>
+                <p class = "nav-button" id = "leave-page">
+                    <%= page.get("pageType") == "text" ? "Cancel edit":"Back" %></p>
+                <p id = "delete-page"
+                    class = "nav-button delete-button">Delete page</p>
+            </div>
+        </script>
+    
+        <script id = "subpage-template" type = "text/template">
+            <div class = "code-screen" id = "select-code-screen"><%=
+                subpage.get("codeHTML") %></div>
+            <textarea id = "subpage-text" class = "sans-serif"
+                rows = "12"><%= subpage.get("text") %></textarea>
+            <div class = "page-control-panel">
+                <p id = "save-subpage" class = "nav-button">Save edits</p>
+                <p id = "leave-subpage" class = "nav-button">Back</p>
+                <p id = "delete-subpage"
+                    class = "nav-button delete-button">Delete subpage</p>
+            </div>
+        </script>
+    
+        <script id = "new-page-template" type = "text/template">
+            <textarea id = "new-page-content" class = 'gray <%= pageType ==
+                "text" ? "sans-serif" : "" %>' rows = "15">Insert your <%=
+                pageType %> here</textarea><br>
+            <div class = "page-control-panel">
+                At page: <input id = "at-page" type = "text" /><br>
+                <p id = "save-new-page" class = "nav-button">Add page</p>
+                <p id = "cancel-new-page" class = "nav-button">Cancel</p>
+            </div>
+        </script>
+    
+        <script id = "new-subpage-template" type = "text/template">
+            <p>To highlight code in the current subpage, simply drag the mouse over
+               it.  Double click a line of code to highlight the whole line.</p>
+            <div class = "code-screen" id = "select-code-screen"><%= code %></div>
+            <textarea id = "new-subpage-text"
+                class = "gray sans-serif" rows = "12"><%= "Insert text here " +
+                "(leave blank if you don't want any text)"%></textarea><br>
+            <div class = "page-control-panel">
+                At subpage: <input id = "at-subpage" type = "text" /><br>
+                <p id = "save-new-subpage" class = "nav-button">Add subpage</p>
+                <p id = "cancel-new-subpage" class = "nav-button">Cancel</p>
+            </div>
+        </script>
+    
+        <script id = "tutorial-json-template">
+            <p>You can modify the code for what to do with the JSON once you are
+               finished with writing a tutorial however you see fit.  For the
+               purpose of this demo, the JSON for your tutorial is in the text
+               box below.</p>
+            <textarea id = "tutorial-json-textarea"
+                rows = "20" readonly = "true"><%= json %></textarea>
+            <p id = "exit-json" class = "nav-button">Return to editing</p>
+        </script>
+
+        <script type = "text/javascript" src = "js/jquery-1.10.1.min.js"></script>
+        <script type = "text/javascript" src = "js/json2.js"></script>
+        <script type = "text/javascript" src = "js/underscore.js"></script>
+        <script type = "text/javascript" src = "js/backbone.js"></script>
+        <script type = "text/javascript" src = "js/structure.js"></script>
+        <script type = "text/javascript" src = "js/rangy-core.js"></script>
+        <script type = "text/javascript" src = "js/rangy-cssclassapplier.js">
+        </script>
+    </head>
+    <body>
+    </body>
+</html>
