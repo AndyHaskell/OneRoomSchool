@@ -10,7 +10,7 @@ Dependencies for this web app include:
 -Rangy's core file  
 -Rangy's CSS Class Applier file  
 -Underscore.js  
--Backbone.js
+-Backbone.js  
 -MathJax
 
 The code from this tutorial generator is currently made to write programming tutorials with both
