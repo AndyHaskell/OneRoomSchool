@@ -11,6 +11,13 @@
 .sans-serif{
     font-family: sans-serif;
 }
+.monospace{
+    font-family: monospace;
+}
+.thumb{
+    width:  100px;
+    height: 100px;
+}
 
 /* Main tutorial */
 body{
@@ -40,20 +47,34 @@ body{
 
 /* Page divs */
 #current-page{
+    padding:          1em 0 0 0;
     background-color: #DDDDDD;
 }
 .code-screen{
     padding:          0 0 0 1em;
     background-color: #000000;
     color:            #555555;
-    font-size:        20px;
+    font-size:        15px;
     font-family:      monospace;
 }
 #subpages{
     padding: 0 0 0 1em;
 }
 #current-subpage{
-    background-color: #DDDDDD;
+    padding:          1em 0 0 0;
+    background-color: #E5E5E5;
+}
+#subpage-caption{
+    padding: 1em 0 0 0;
+}
+#preview-page{
+    width:                 90%;
+    margin:                2% 0 0 5%;
+    padding:               .3em .3em .3em .3em;
+    background-color:      #FFFFFF;
+    border-radius:         15px;
+    -moz-border-radius:    15px;
+    -webkit-border-radius: 15px;
 }
 
 /* Buttons */
@@ -64,9 +85,9 @@ body{
     display:               inline-block;
     background-color:      #00CC00;
     text-align:            center;
-    border-radius:         7px;
-    -moz-border-radius:    7px;
-    -webkit-border-radius: 7px;
+    border-radius:         10px;
+    -moz-border-radius:    10px;
+    -webkit-border-radius: 10px;
 }
 .nav-button:hover{
     background-color: #00EE00;
