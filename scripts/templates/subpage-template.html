@@ -1,0 +1,28 @@
+<%/*
+The template for displaying a subpage.  Takes in a Subpage model as input.
+When a subpage is displayed from a code page, the code page's control panel and
+code screen are hidden.  The code screen in a subpage can be edited to highlight
+sections of code that are of interest.
+*/%>
+            <p>To highlight code in the current subpage, simply drag the mouse
+               over it.  Double click a line of code to highlight the whole
+               line.</p>
+            <div class = "code-screen" id = "select-code-screen"><%=
+                subpage.get("codeHTML") %></div>
+            <div class = "subpage-caption">
+                <div id = "preview-page"></div>
+                <textarea id = "subpage-content" class = "sans-serif"
+                    rows = "9" onblur =
+                    "previewPage('#subpage-content', '#preview-page')"><%=
+                    subpage.get("caption") %></textarea><br>
+                Display LaTeX? <input id = "has-LaTeX" type = "checkbox"
+                <%= subpage.get("hasLaTeX") ? "checked = 'yes'" : "" %>
+                onchange = "previewPage('#subpage-content', '#preview-page')"/>
+                <br>
+            </div>
+            <div class = "page-control-panel">
+                <p id = "save-subpage" class = "nav-button">Save edits</p>
+                <p id = "leave-subpage" class = "nav-button">Back</p>
+                <p id = "delete-subpage"
+                    class = "nav-button delete-button">Delete subpage</p>
+            </div>

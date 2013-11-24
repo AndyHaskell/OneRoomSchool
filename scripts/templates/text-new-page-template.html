@@ -1,0 +1,22 @@
+<%/*
+When defining a new page type, the user needs to determine what to have in the
+"new page template" for that page.  For example, the new page template for text
+pages includes a textarea, as well as a preview box for showing what the page
+will look like with images and LaTeX, while the template for a new code page has
+just the textbox where you add code that will appear on the code screen on that
+page.
+*/%>
+            <div id = "preview-page" class = "invisible"></div>
+            <textarea id="new-page-content" class="gray sans-serif has-preview"
+                rows = "15" data-preview = "#preview-page"
+                >Insert your <%= pageType %> here</textarea><br>
+            Display LaTeX? <input id = "has-LaTeX" type = "checkbox"
+            data-textbox = "#new-page-content"
+            data-preview = "#preview-page"/><br>
+            <div class = "page-control-panel">
+                At page: <input id = "at-page" type = "text" /><br>
+                <p id = "add-new-page" class = "nav-button"
+                   data-template = "default" data-page-type = "<%= pageType %>">
+                   Add page</p>
+                <p id = "cancel-new-page" class = "nav-button">Cancel</p>
+            </div>

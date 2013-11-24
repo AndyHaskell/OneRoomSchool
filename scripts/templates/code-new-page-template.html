@@ -1,0 +1,14 @@
+<%/*
+When defining a new page type, the user needs to determine what to have in the
+"new page template" for that page.  This is the template for a new code page,
+which contains a textarea for the code on the page.
+*/%>
+            <textarea id = "new-page-content" class = 'gray' rows = "15"
+                >Insert your code here</textarea><br>
+            <div class = "page-control-panel">
+                At page: <input id = "at-page" type = "text" /><br>
+                <p id = "add-new-page" class = "nav-button"
+                   data-template = "default" data-page-type = "code">
+                   Add page</p>
+                <p id = "cancel-new-page" class = "nav-button">Cancel</p>
+            </div>

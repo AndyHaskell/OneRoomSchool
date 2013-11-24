@@ -1,0 +1,8 @@
+<%/*
+The template for rendering the pages list in the tutorial.  noPages is a boolean
+variable representing whether or not the tutorial's pages list is empty.
+pageButtons is the HTML for the buttons to open the pages.
+*/%>
+            <div id = "no-pages"><%= noPages ? "Your tutorial has no pages" :
+                                               "" %></div>
+            <div id = "page-list"><%= pageButtons %></div>

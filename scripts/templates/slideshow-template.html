@@ -1,0 +1,43 @@
+<%/*
+The template for the tutorial.  title is the title of the tutorial and desc is
+the description of the tutorial.  The current-page div will be used for
+rendering both the templates for new pages and the templates for pages in the
+tutorial.  The tutorial-json div is used for rendering the divs for getting the
+JSON for a tutorial or loading another tutorial from its JSON.
+*/%>
+            <div id = "set-title">
+                <input id = "input-title" value = "<%= title %>"/><br>
+                <textarea id = "input-desc" class = "sans-serif"
+                    rows = "5"><%= desc %></textarea><br>
+                <p id = "save-title" class = "nav-button">Save</p>
+                <p id = "cancel-title" class = "nav-button">Cancel</p>
+            </div>
+            <div id = "slideshow-main">
+                <div id = "display-title" class = "invisible">
+                    <div id = "title-header"><%= title %></div>
+                    <p id = "edit-title" class = "nav-button">Edit title</p>
+                </div>
+                <div id = "main-toolbar">
+                    <div id = "pages"></div>
+                    <div id = "new-page-toolbar">
+<!-- When making a new page type, add a button for the new page type with its
+     "data-page-type" attribute saying the name of the new page and its
+     "data-template" attribute describing which template will be loaded for the
+     "create new page" window -->
+                        <p id = "new-text-page"
+                            class = "new-page-button nav-button"
+                            data-page-type = "text" data-template = "text">
+                            New text page</p>
+                        <p id = "new-code-page"
+                            class = "new-page-button nav-button"
+                            data-page-type = "code" data-template = "code">
+                            New code page</p>
+                        <p id = "get-json" class = "nav-button"
+                            data-page-type = "json">Get JSON</p>
+                        <p id = "load-json" class = "nav-button"
+                            data-page-type = "json">Load tutorial</p>
+                    </div>
+                </div>
+                <div id = "current-page" class = "invisible"></div>
+            </div>
+            <div id = "tutorial-json" class = "invisible"></div>

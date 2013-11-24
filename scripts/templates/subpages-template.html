@@ -1,0 +1,8 @@
+<%/*
+The template for rendering the subpages list for a page.  noSubpages is a
+boolean variable representing whether or not the subpages list is empty.
+subpageButtons is the HTML for the buttons to open the subpages.
+*/%>
+            <div id = "no-subpages"><%= noSubpages ?
+                                       "Your page has no subpages" : "" %></div>
+            <div id = "subpage-list"><%= subpageButtons %></div>

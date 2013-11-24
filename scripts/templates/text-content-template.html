@@ -1,0 +1,9 @@
+            <div id = "preview-page" <%= page.get("content").match(/\S/) ? "" :
+                "class = 'invisible'" %>><%=
+                page.get("content") %></div>
+            <textarea id = "page-content" class = "sans-serif has-preview"
+                rows = "15" data-preview = "#preview-page" ><%=
+                page.get("content") %></textarea><br>
+            Display LaTeX? <input id = "has-LaTeX" type = "checkbox"
+            data-textbox = "#page-content" data-preview = "#preview-page"
+            <%= page.get("hasLaTeX") ? "checked = 'yes'" : "" %>/><br>

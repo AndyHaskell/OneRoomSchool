@@ -5,6 +5,7 @@ A JavaScript-based tutorial generator for making easy to read browser-based prog
 
 Dependencies for this web app include:
 
+-require.js
 -json2.js  
 -jQuery (I used version 1.10.1)  
 -Rangy's core file  
@@ -23,5 +24,5 @@ idea for an add-on for teaching specifically about Computer Science in a specifi
 feel free to add these features
 
 Also, I would like to thank the programming community for all that the community has done to make it
-easier for new programmers to learn new programming skills.  This tradition is what inspired me to
-start this project.  Keep being awesome!
+easier for new programmers to learn and use new programming skills.  This tradition is what inspired
+me to start this project.  Keep being awesome!
