@@ -16,7 +16,7 @@ Dependencies for this web app include:
 
 The code from this tutorial generator is currently made to write programming tutorials with both
 text and code pages in slide show format, which can be encoded in JSON by clicking the "Get JSON"
-button.
+button.  The code for a JavaScript program for displaying the tutorials is currently under development.
 
 The original OneRoomSchool tutorial generator was made to be simple so that it is easy to add on to.
 If you want to add other features you think would be useful in programming tutorials or you have an
