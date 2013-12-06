@@ -45,16 +45,7 @@ define([
          *#current-subpage div.
          */
         openSubpage: function(e){
-            if(this.subviews.currentSubpageView != null &&
-               !this.subviews.currentSubpageView.isClosed){
-                this.subviews.currentSubpageView.close();
-            }
-            $("#page-code-screen, #page-control-panel-div").hide();
-            var s = $(e.target).data("subpage-number");
-            var subpageToOpen = new SubpageView({model:this.collection.at(s)});
-            $("#current-subpage").html(subpageToOpen.render().el);
-            this.subviews.currentSubpageView = subpageToOpen;
-            previewPage('#subpage-content', '#preview-page');
+            Backbone.trigger("open-subpage",$(e.target).data("subpage-number"));
         },
     });
     

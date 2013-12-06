@@ -1,7 +1,8 @@
 define([
     'underscore',
-    'backbone'
-], function(_, Backbone){
+    'backbone',
+    'models/Subpage'
+], function(_, Backbone, Subpage){
     Page = Backbone.Model.extend({
         /*The initialize function in the Page model is called any time a Page
          *is being initialized.  It takes in a parameter "data", which is a hash
@@ -15,11 +16,11 @@ define([
          */
         initialize: function(data){
             if(this.getType() == "code"){
-                this.set({subpages: new Subpages()});
+                this.set({subpages: new Subpage.Subpages()});
                 if(typeof(data["subpages"]) != "undefined"){
                     for(var i = 0; i < data["subpages"].length; i++){
                         this.get("subpages").add(
-                          new Subpage(data["subpages"][i]));
+                          new Subpage.Subpage(data["subpages"][i]));
                     }
                 }
             }

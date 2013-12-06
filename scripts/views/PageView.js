@@ -8,16 +8,16 @@ define([
     "views/SubpagesView",
     "models/Subpage",
     "text!templates/new-subpage-template.html",
-    "rangy",
-    "cssclassapplier"
-], function($, _, Backbone, renderPage, previewPage, SubpageView, SubpagesView,
-            Subpage, newSubpageTemplateText, rangy, cssclassapplier){
+    "other/highlight"
+], function($, _, Backbone, renderPage, PreviewPage, SubpageView, SubpagesView,
+            Subpage, newSubpageTemplateText, highlightCode){
     //The view representing a page of the tutorial
     PageView = Backbone.View.extend({
         initialize: function(){
             this.subviews = {};
             this.isClosed = false;
             this.customizeView();
+            this.listenTo(Backbone, "open-subpage", this.openSubpage);
         },
         /*The default events for a PageView are for closing the PageView and
          *deleting the Page, upon clicking their respective buttons.  Additional
@@ -126,12 +126,13 @@ define([
                 self.addSubpage = function(){
                     var insertAt = parseInt($("#at-subpage").val());
                     var subpageList = this.model.get("subpages");
-                    insertAt = max((insertAt >= 0 &&
-                                    insertAt <= subpageList.length+1 ?
-                                    insertAt-1 : subpageList.length), 0);
+                    insertAt = Math.max((insertAt >= 0 &&
+                                         insertAt <= subpageList.length+1 ?
+                                         insertAt-1 : subpageList.length), 0);
                     subpageList.add(new Subpage.Subpage({
                         codeHTML: $("#select-code-screen").html(),
-                        caption:  $("#new-subpage-content").val(),
+                        caption:  $("#new-subpage-content").hasClass("gray") ?
+                                  "" : $("#new-subpage-content").val(),
                         hasLaTeX: $("#has-LaTeX:checked").length == 1
                     }), {at: insertAt});
                     this.closeNewSubpage();
@@ -178,8 +179,8 @@ define([
          */
         processPageHTML: function(){
             if(this.model.get("pageType") == "text"){
-                previewPage.setPreviewPage();
-                previewPage.previewPage('#page-content', '#preview-page');
+                PreviewPage.setPreviewPage();
+                PreviewPage.previewPage('#page-content', '#preview-page');
             }
             /******************************************************************
              *                                                                *
@@ -188,7 +189,22 @@ define([
              *        way that can't be done in the render function.          *
              *                                                                *
              ******************************************************************/
-        }
+        },
+        
+        openSubpage: function(subpageNumber){
+            var subpagesView = this.subviews.subpagesView;
+            var currentPageView = this.subviews.currentSubpageView;
+            var subpageToOpen = new SubpageView({
+                             model: subpagesView.collection.at(subpageNumber)});
+            if(this.subviews.currentSubpageView != null &&
+               !this.subviews.currentSubpageView.isClosed){
+                this.subviews.currentSubpageView.close();
+            }
+            $("#page-code-screen, #page-control-panel-div").hide();
+            $("#current-subpage").html(subpageToOpen.render().el);
+            this.subviews.currentSubpageView = subpageToOpen;
+            PreviewPage.previewPage('#subpage-content', '#preview-page');
+        },
     });
 
     return PageView;

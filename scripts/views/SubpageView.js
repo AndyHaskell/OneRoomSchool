@@ -4,7 +4,7 @@ define([
     "backbone",
     "other/highlight",
     "text!templates/subpage-template.html",
-], function($, _, Backbone, highlightCode, subpageTemplateText){
+], function($, _, Backbone, Highlight, subpageTemplateText){
     /*The view for editing a code page's subpage.  Its HTML is very similar to
      *that of the code page.
      */
@@ -22,7 +22,7 @@ define([
             "click span"                : "removeSpan"
         },
         render: function(){
-            this.$el.html(this.template({code: tutorialView.subviews.
+            this.$el.html(this.template({code:tutorialView.subviews.
                                               currentPageView.model.get("code"),
                                          subpage: this.model}));
             return this;

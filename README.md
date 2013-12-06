@@ -5,7 +5,7 @@ A JavaScript-based tutorial generator for making easy to read browser-based prog
 
 Dependencies for this web app include:
 
--require.js
+-require.js with the text plugin  
 -json2.js  
 -jQuery (I used version 1.10.1)  
 -Rangy's core file  

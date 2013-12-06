@@ -31,6 +31,7 @@ define([
             this.isClosed = false;
             this.subviews.pagesView =
                 new PagesView({collection: this.model.get("pages")});
+            this.listenTo(Backbone, "open-page", this.openPage);
         },
         id: "slideshow",
         template: _.template(slideshowTemplate),
@@ -38,13 +39,15 @@ define([
             "click #save-title"      : "saveTitle",
             "click #edit-title"      : "editTitle",
             "click #cancel-title"    : "closeTitle",
+
             "click .new-page-button" : "openNewPage",
             "click #cancel-new-page" : "closeNewPage",
             "click #add-new-page"    : "addNewPage",
+
             "click .gray"            : "removeGray",
+
             "click #get-json"        : "getJSON",
             "click #exit-json"       : "exitJSON",
-            
             "click #load-json"       : "loadJSON",
             "click #load-tutorial"   : "loadTutorial"
         },
@@ -102,8 +105,8 @@ define([
          *in their respective input boxes in the "#set-title" box.
          */
         saveTitle: function(){
-            this.model.set({title: $("#input-title").val(),
-                            desc: $("#input-desc").val()});
+            this.model.updateTitleInfo($("#input-title").val(),
+                                       $("#input-desc").val());
             this.closeTitle();
         },
         //closeTitle hides the "#set-title" box and opens the title header.
@@ -147,6 +150,7 @@ define([
                                      insertAt-1 : pageList.length), 0);
                 newPageAttributes = {pageType: $(e.target).data("page-type"),
                                        content: $("#new-page-content").val()};
+                                       
                 if(newPageAttributes["pageType"] == "text"){
                     newPageAttributes["hasLaTeX"] =
                         $("#has-LaTeX:checked").length == 1
@@ -164,6 +168,35 @@ define([
                 this.closeNewPage();
             }
         },
+        
+        openPage: function(pageNumber){
+            var pagesView = this.subviews.pagesView;
+            var currentPageView = this.subviews.currentPageView;
+            var pageToOpen = new PageView({
+                                   model: pagesView.collection.at(pageNumber)});
+            //A page was already open
+            if(currentPageView != null && !currentPageView.isClosed){
+                currentPageView.close(function(){
+                    $("#current-page").html(pageToOpen.render().el);
+                    pageToOpen.processPageHTML();
+                    $("#current-page").slideDown(400);
+                });
+            }
+            /*No pages are open; the user was in the main menu or new page mode
+             *when the page button was clicked.
+             */
+            else{
+                var toHide = $("#current-page").html() != "" ?
+                             "#current-page" : "#new-page-toolbar";
+                $(toHide).slideUp(400, function(){
+                    $("#current-page").html(pageToOpen.render().el);
+                    pageToOpen.processPageHTML();
+                    $("#current-page").slideDown(400);
+                });
+            }
+            this.subviews.currentPageView = pageToOpen;
+        },
+        
         /*removeGray clears the prompt text from any input box or textarea with
          *the class "gray" and makes the text in that input box black.
          */
