@@ -19,6 +19,12 @@
     height: 100px;
 }
 
+/* inline code snippets */
+code{
+    background-color: #DDDDDD;
+    font-size:        1.2em;
+}
+
 /* Main tutorial */
 body{
     margin:      0;
@@ -139,7 +145,7 @@ body{
 #set-title{
     margin:           0;
     padding:          1em 0 .5em 5%;
-    background-color: #DDDDDD;
+    background-color: #F2F2F2;
     color:            #333333;
 }
 textarea{

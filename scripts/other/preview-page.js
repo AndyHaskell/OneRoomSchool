@@ -2,15 +2,15 @@ define([
     "jquery",
     "other/text-processors"
 ], function($, textProcessors){
-    textToHTMLwithImages = textProcessors.textToHTMLwithImages;
+    textToHTMLwithEdits = textProcessors.textToHTMLwithEdits;
     /*In pages that display text where the text can be replaced with LaTeX or
-     *images, call textToHTMLwithImages on the content of "textbox".  If the
+     *images, call textToHTMLwithEdits on the content of "textbox".  If the
      *checkbox "#has-LaTeX" is checked, then also make it so "#preview-page"
      *displays LaTeX.  Do not display "#preview-page" if the content of the
      *textbox is blank or only contains whitespace.
      */
     previewPage = function(textbox, preview){
-        $(preview).html(textToHTMLwithImages($(textbox).val()));
+        $(preview).html(textToHTMLwithEdits($(textbox).val()));
         if($(preview).html().match(/\S/)){
             if($("#has-LaTeX:checked").length == 1){
                 MathJax.Hub.Typeset();

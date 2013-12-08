@@ -9,13 +9,34 @@ define([], function(){
                    .replace(/>/g, "&gt;").replace(/\n/g, "<br>");
     }
     
-    /*textToHTMLwithImages calls textToHTML to escape characters that are part
-     *of HTML syntax and then replace OneRoomSchool image tags in square
-     *brackets with HTML image tags.  Image tags can be escaped by putting
+    /*textToHTMLwithEdits calls textToHTML to escape characters that are part
+     *of HTML syntax and then replaces OneRoomSchool tags in square brackets
+     *with corresponding HTML tags (img tags are replaced with HTML img tags and
+     *code tags are replaced with spans that display the code in the tag with a
+     *gray background and monospace text).  Tags can be escaped by putting
      *backslashes directly before the tag.
      */
-    textToHTMLwithImages = function(text){
+    textToHTMLwithEdits = function(text){
         var inHTML = textToHTML(text);
+        
+        //Replace code tags with "code-snippet" spans
+        var codeRegex = /\\*\[code\s+\S.*\]/g;
+        var codeTextRegex = /code\s+\S.*\]/g;
+        var codeTagRegex = /\[code\s+\S.*\]/g
+        inHTML = inHTML.replace(codeRegex,
+        function(match){
+            var slashes = match.match(/\\*/)[0];
+            var displaySlashes = slashes.substr(0, slashes.length / 2);
+            var code = match.match(codeTextRegex)[0];
+            var codeTag = match.match(codeTagRegex)[0];
+            var index = 4;
+            while(code[index].match(/\s/)){index++;}
+            code = code.substr(index, code.length-index-1);
+            return slashes.length % 2 == 1 ? slashes + codeTag :
+                   displaySlashes + "<code>" + code + "</code>";
+        });
+        
+        //Replace img tags with images
         var imgRegex = //See below
 /*************************************************************************
  * backslashes   img  The image's URL   The image's size data (optional) *
@@ -74,7 +95,7 @@ define([], function(){
     
     return {
         textToHTML:           textToHTML,
-        textToHTMLwithImages: textToHTMLwithImages,
+        textToHTMLwithEdits: textToHTMLwithEdits,
         codeToHTML:           codeToHTML
     }
 });
