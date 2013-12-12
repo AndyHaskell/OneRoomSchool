@@ -14,6 +14,9 @@ define([
              */
             this.collection.bind("add", this.render, this);
             this.collection.bind("remove", this.render, this);
+            
+            this.listenTo(Backbone, "close-subpage", this.highlightButton);
+            
             this.subviews = {};
             this.isClosed = false;
         },
@@ -45,8 +48,20 @@ define([
          *#current-subpage div.
          */
         openSubpage: function(e){
-            Backbone.trigger("open-subpage",$(e.target).data("subpage-number"));
+            if(!$(e.target).hasClass("selected-page-button")){
+                Backbone.trigger("open-subpage",$(e.target)
+                                                  .data("subpage-number"));
+            }
         },
+        //Highlights the button for the subpage that is currently open
+        highlightButton: function(pageNumber){
+            $(".selected-subpage-button").removeClass(
+                                                     "selected-subpage-button");
+            if(pageNumber >= 0){
+                $(".subpage-button"+":nth-of-type("+(pageNumber+1)+")")
+                                           .addClass("selected-subpage-button");
+            }
+        }
     });
     
     return SubpagesView;

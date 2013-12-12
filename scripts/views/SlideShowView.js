@@ -194,6 +194,7 @@ define([
                     $("#current-page").slideDown(400);
                 });
             }
+            this.subviews.pagesView.highlightButton(pageNumber);
             this.subviews.currentPageView = pageToOpen;
         },
         

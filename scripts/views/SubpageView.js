@@ -33,6 +33,7 @@ define([
          */
         close: function(){
             this.isClosed = true;
+            Backbone.trigger("close-subpage", -1);
             this.unbind();
             this.remove();
             $("#page-code-screen, #page-control-panel-div").show();

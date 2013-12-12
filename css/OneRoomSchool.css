@@ -95,7 +95,7 @@ body{
     -moz-border-radius:    10px;
     -webkit-border-radius: 10px;
 }
-.nav-button:hover{
+.nav-button:hover, .selected-page-button, .selected-subpage-button{
     background-color: #00EE00;
 }
 .new-page-button, #get-json{

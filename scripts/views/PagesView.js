@@ -14,6 +14,8 @@ define([
             this.collection.bind("add", this.render, this);
             this.collection.bind("remove", this.render, this);
             
+            this.listenTo(Backbone, "close-page", this.highlightButton);
+            
             this.subviews = {};
             this.isClosed = false;
         },
@@ -43,7 +45,17 @@ define([
          *"current page view"
          */
         openPage: function(e){
-            Backbone.trigger("open-page", $(e.target).data("page-number"));
+            if(!$(e.target).hasClass("selected-page-button")){
+                Backbone.trigger("open-page", $(e.target).data("page-number"));
+            }
+        },
+        //Highlights the button for the page that is currently open
+        highlightButton: function(pageNumber){
+            $(".selected-page-button ").removeClass("selected-page-button");
+            if(pageNumber >= 0){
+                $(".page-button"+":nth-of-type("+(pageNumber+1)+")")
+                                              .addClass("selected-page-button");
+            }
         }
     });
     

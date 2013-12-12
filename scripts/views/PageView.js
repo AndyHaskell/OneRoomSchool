@@ -44,6 +44,7 @@ define([
          */
         close: function(callback){
             var self = this;
+            Backbone.trigger("close-page", -1);
             $("#current-page").slideUp(400, function(){
                 self.closeSubviews();
                 if(typeof(callback) == "function"){
@@ -202,6 +203,7 @@ define([
             }
             $("#page-code-screen, #page-control-panel-div").hide();
             $("#current-subpage").html(subpageToOpen.render().el);
+            this.subviews.subpagesView.highlightButton(subpageNumber);
             this.subviews.currentSubpageView = subpageToOpen;
             PreviewPage.previewPage('#subpage-content', '#preview-page');
         },
