@@ -4,14 +4,15 @@ define([
     "backbone",
     "other/highlight",
     "text!templates/subpage-template.html",
-], function($, _, Backbone, Highlight, subpageTemplateText){
+], function($, _, Backbone, highlightCode, subpageTemplateText){
     /*The view for editing a code page's subpage.  Its HTML is very similar to
      *that of the code page.
      */
-    SubpageView = Backbone.View.extend({
-        initialize: function(){
+    var SubpageView = Backbone.View.extend({
+        initialize: function(options){
             this.subviews = {};
             this.isClosed = false;
+            this.rootName = options.rootName;
         },
         template: _.template(subpageTemplateText),
         events: {
@@ -42,7 +43,7 @@ define([
          *that are used when creating a new subpage.
          */
         highlightCode: function(){
-            Highlight.highlightCode();
+            highlightCode();
         },
         //Remove the highlighting on a section of code in a subpage
         removeSpan: function(e){

@@ -4,15 +4,15 @@ When a subpage is displayed from a code page, the code page's control panel and
 code screen are hidden.  The code screen in a subpage can be edited to highlight
 sections of code that are of interest.
 */%>
-            <p>To highlight code in the current subpage, simply drag the mouse
+            <div>To highlight code in the current subpage, simply drag the mouse
                over it.  Double click a line of code to highlight the whole
-               line.</p>
+               line.</div>
             <div class = "code-screen" id = "select-code-screen"><%=
                 subpage.get("codeHTML") %></div>
             <div class = "subpage-caption">
                 <div id = "preview-page"></div>
                 <textarea id = "subpage-content" class = "sans-serif"
-                    rows = "9" onblur =
+                    rows = "6" onblur =
                     "previewPage('#subpage-content', '#preview-page')"><%=
                     subpage.get("caption") %></textarea><br>
                 Display LaTeX? <input id = "has-LaTeX" type = "checkbox"

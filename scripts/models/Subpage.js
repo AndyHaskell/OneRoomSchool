@@ -8,7 +8,7 @@ define([
      *Subpages can also display LaTeX in their captions if the user wants to
      *display mathematical formulas with the code (described in "hasLaTeX").
      */
-    Subpage = Backbone.Model.extend({
+    var Subpage = Backbone.Model.extend({
         defaults: {
             codeHTML: "",
             caption: "",
@@ -17,7 +17,7 @@ define([
     });
     
     //A collection of Subpages in a code page
-    Subpages = Backbone.Collection.extend({model: Subpage});
+    var Subpages = Backbone.Collection.extend({model: Subpage});
     
     return {
         Subpage: Subpage,

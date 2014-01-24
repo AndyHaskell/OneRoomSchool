@@ -8,8 +8,8 @@ define([
     "templates/control-panel-templates",
     "text!templates/page-template.html"
 ], function(_, content, controlPanel, pageTemplateText){
-    renderPage = function(page, f){
-        contentHTML = content[page.getType()]({page: page, f: f});
+    renderPage = function(page){
+        contentHTML = content[page.getType()]({page: page});
         controlPanelHTML = controlPanel[page.getType()]({page: page});
         pageTemplate = _.template(pageTemplateText);
         return pageTemplate({content: contentHTML,

@@ -1,8 +1,27 @@
 <%/*
-The template for rendering the pages list in the tutorial.  noPages is a boolean
-variable representing whether or not the tutorial's pages list is empty.
-pageButtons is the HTML for the buttons to open the pages.
+The template for rendering the pages list in the tutorial.  pages is the number
+of pages in the pages list and leftmost is the index of the leftmost page button
+to display.  (The pages list displays at most seven page buttons at a time.)
 */%>
-            <div id = "no-pages"><%= noPages ? "Your tutorial has no pages" :
+            <div id = "no-pages"><%= pages == 0 ? "Your tutorial has no pages" :
                                                "" %></div>
-            <div id = "page-list"><%= pageButtons %></div>
+            <% if(pages > 0){ %>
+                <div id = "shift-pages-left" class = "shift-left">
+                    <% if(leftmost >= 7){ %>
+                        <p class = "nav-button">&lt;&lt;</p>
+                    <% } %>
+                </div>
+                <div id = "page-list">
+                    <% for(var i = 0; leftmost + i < pages && i < 7; i++){ %>
+                        <p class = "page-button nav-button"
+                          data-page-number = "<%= leftmost + i %>">
+                            Page <%= (leftmost + i + 1).toString() %>
+                        </p>
+                    <% } %>
+                </div>
+                <div id = "shift-pages-right" class = "shift-right">
+                    <% if(leftmost <= pages - 7 && pages > 7){ %>
+                        <p class = "nav-button">&gt;&gt;</p>
+                    <% } %>
+                </div>
+            <% } %>

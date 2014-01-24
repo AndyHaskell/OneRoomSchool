@@ -26,15 +26,28 @@ code{
 }
 
 /* Main tutorial */
+html{
+    margin: 0 0 0 0;
+}
 body{
-    margin:      0;
+    margin:      0 0 0 0;
     font-family: sans-serif;
 }
 #display-title{
     margin:           0;
-    padding:          1em 0 .5em 1em;
+    padding:          0 0 .2em 1em;
     background-color: #DDDDDD;
     color:            #333333;
+}
+#pages{
+    width:   100%;
+    padding: 0 0 1% 0;
+    margin:  0 0 0 0;
+}
+#page-list{
+    width:   80%;
+    padding: 0 0 0 2%;
+    display: inline-block;
 }
 
 /* Rangy highlighting */
@@ -53,7 +66,7 @@ body{
 
 /* Page divs */
 #current-page{
-    padding:          1em 0 0 0;
+    padding:          .2em 0 0 0;
     background-color: #DDDDDD;
 }
 .code-screen{
@@ -81,6 +94,10 @@ body{
     border-radius:         15px;
     -moz-border-radius:    15px;
     -webkit-border-radius: 15px;
+}
+.shift-left, .shift-right{
+    width:   8%;
+    display: inline-block;
 }
 
 /* Buttons */
@@ -114,6 +131,18 @@ body{
 #exit-json{
     width: 12%;
 }
+.shift-left .nav-button{
+    width: 95%;
+}
+.shift-right .nav-button{
+    width: 95%;
+}
+.page-button{
+    width: 12%;
+}
+.subpage-button{
+    margin:  0 .1em 0 .1em;
+}
 
 /* Headers */
 #no-pages{
@@ -137,7 +166,8 @@ body{
     margin: 0 0 .5em 2%;
 }
 #main-toolbar{
-    padding:          .5em .5em .5em .5em;
+    width:            100%;
+    margin:           0 0 0 0;
     background-color: #EEEEEE;
 }
 

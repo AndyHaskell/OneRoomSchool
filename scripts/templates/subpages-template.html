@@ -1,8 +1,28 @@
 <%/*
-The template for rendering the subpages list for a page.  noSubpages is a
-boolean variable representing whether or not the subpages list is empty.
-subpageButtons is the HTML for the buttons to open the subpages.
+The template for rendering the subpages list in the tutorial.  subpages is the
+number of subpages in the subpages list and leftmost is the index of the
+leftmost subpage button to display.  (The subpages list displays at most seven
+subpage buttons at a time.)
 */%>
-            <div id = "no-subpages"><%= noSubpages ?
+            <div id = "no-subpages"><%= subpages == 0 ?
                                        "Your page has no subpages" : "" %></div>
-            <div id = "subpage-list"><%= subpageButtons %></div>
+            <% if(subpages > 0){ %>
+                <div id = "shift-subpages-left" class = "shift-left">
+                    <% if(leftmost >= 7){ %>
+                        <p class = "nav-button">&lt;&lt;</p>
+                    <% } %>
+                </div>
+                <div id = "subpage-list">
+                    <% for(var i = 0; leftmost + i < subpages && i < 7; i++){ %>
+                        <p class = "subpage-button nav-button"
+                          data-subpage-number = "<%= leftmost + i %>">
+                            Subpage <%= (leftmost + i + 1).toString() %>
+                        </p>
+                    <% } %>
+                </div>
+                <div id = "shift-subpages-right" class = "shift-right">
+                    <% if(leftmost <= subpages - 7 && subpages > 7){ %>
+                        <p class = "nav-button">&gt;&gt;</p>
+                    <% } %>
+                </div>
+            <% } %>

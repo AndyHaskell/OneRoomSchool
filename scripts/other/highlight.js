@@ -1,12 +1,12 @@
 define([
     "jquery",
-    "rangy"
-], function($, rangy){
-    require(["cssclassapplier"]);
+    "rangy",
+    "cssclassapplier"
+], function($, rangy, cssclassapplier){
     /*Uses Rangy to highlight code the user drags over when creating a new
      *subpage or editing a subpage
      */
-    highlightCode = function(){
+    var highlightCode = function(){
         rangy.init();
         var highlight = rangy.createCssClassApplier("selected");
         var range = rangy.getSelection().getRangeAt(0);

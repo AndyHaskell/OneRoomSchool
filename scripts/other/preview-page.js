@@ -1,15 +1,15 @@
 define([
     "jquery",
     "other/text-processors"
-], function($, textProcessors){
-    textToHTMLwithEdits = textProcessors.textToHTMLwithEdits;
+], function($, TextProcessors){
+    textToHTMLwithEdits = TextProcessors.textToHTMLwithEdits;
     /*In pages that display text where the text can be replaced with LaTeX or
      *images, call textToHTMLwithEdits on the content of "textbox".  If the
      *checkbox "#has-LaTeX" is checked, then also make it so "#preview-page"
      *displays LaTeX.  Do not display "#preview-page" if the content of the
      *textbox is blank or only contains whitespace.
      */
-    previewPage = function(textbox, preview){
+    var previewPage = function(textbox, preview){
         $(preview).html(textToHTMLwithEdits($(textbox).val()));
         if($(preview).html().match(/\S/)){
             if($("#has-LaTeX:checked").length == 1){
@@ -26,7 +26,7 @@ define([
      *"has-LaTeX" id are opened, bind events to them so when the textarea is
      *blurred or the checkbox is clicked, previewPage is called.
      */
-    setPreviewPage = function(){
+    var setPreviewPage = function(){
         $(".has-preview").on("blur", function(e){
             previewPage($(e.target), $(e.target).data("preview"));
         });

@@ -3,7 +3,7 @@ define([], function(){
      *like the text in a text file by escaping various characters that do not
      *represent themselves in HTML
      */    
-    textToHTML = function(text){
+    var textToHTML = function(text){
         return text.replace(/\&/g, "&amp;").replace(/\'/g, "&apos;")
                    .replace(/\"/g, "&quot;").replace(/</g, "&lt;")
                    .replace(/>/g, "&gt;").replace(/\n/g, "<br>");
@@ -16,7 +16,7 @@ define([], function(){
      *gray background and monospace text).  Tags can be escaped by putting
      *backslashes directly before the tag.
      */
-    textToHTMLwithEdits = function(text){
+    var textToHTMLwithEdits = function(text){
         var inHTML = textToHTML(text);
         
         //Replace code tags with "code-snippet" spans
@@ -85,7 +85,7 @@ define([], function(){
      *like the code in a text file by escaping various characters that do not
      *represent themselves in HTML
      */
-    codeToHTML = function(code, tabSize){
+    var codeToHTML = function(code, tabSize){
         var tab = "";
         for(var i = 0; i < tabSize; i++){
             tab = tab + " ";
@@ -95,7 +95,7 @@ define([], function(){
     
     return {
         textToHTML:           textToHTML,
-        textToHTMLwithEdits: textToHTMLwithEdits,
+        textToHTMLwithEdits:  textToHTMLwithEdits,
         codeToHTML:           codeToHTML
     }
 });

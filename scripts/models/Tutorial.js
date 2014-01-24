@@ -4,11 +4,10 @@ define([
     "models/Page"
 ], function(_, Backbone, Page){
     //The model for storing a tutorial's data
-    Tutorial = Backbone.Model.extend({
+    var Tutorial = Backbone.Model.extend({
         defaults: {
             title  : "Insert your title here",
-            desc   : "Insert your description here",
-            format : "slide-show"
+            desc   : "Insert your description here"
         },
         /*If the tutorial is being loaded from JSON, then the tutorial's JSON
          *object is passed in as "data".  Otherwise, no parameters are taken in

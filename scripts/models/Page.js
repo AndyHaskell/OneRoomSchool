@@ -3,7 +3,8 @@ define([
     'backbone',
     'models/Subpage'
 ], function(_, Backbone, Subpage){
-    Page = Backbone.Model.extend({
+    //The Backbone.js model for a page of the tutorial
+    var Page = Backbone.Model.extend({
         /*The initialize function in the Page model is called any time a Page
          *is being initialized.  It takes in a parameter "data", which is a hash
          *of the Page's attributes.

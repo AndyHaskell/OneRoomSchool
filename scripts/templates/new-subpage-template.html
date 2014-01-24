@@ -2,14 +2,14 @@
 The template for a new subpage of a code page.  The code from the current page
 is passed in the parameter "code".
 */%>
-            <p>To highlight code in the current subpage, simply drag the mouse
+            <div>To highlight code in the current subpage, simply drag the mouse
                over it.  Double click a line of code to highlight the whole
-               line.</p>
+               line.</div>
             <div id = "select-code-screen" class = "code-screen"><%=code%></div>
             <div id = "subpage-caption">
                 <div id = "preview-page" class = "invisible"></div>
                 <textarea id = "new-subpage-content" class = "gray sans-serif"
-                    rows = "9" onblur = <%=
+                    rows = "6" onblur = <%=
                       "previewPage('#new-subpage-content','#preview-page')"
                     %>><%=
                     "Insert text here (leave blank if you don't want any text)"

@@ -3,38 +3,42 @@ define([
     "underscore",
     "backbone",
     "models/Tutorial",
+    "models/Page",
     "views/PagesView",
+    "views/PageView",
     "text!templates/slideshow-template.html",
-    "text!templates/pages-template.html",
-    "text!templates/page-template.html",
     "text!templates/tutorial-json-template.html",
     "text!templates/load-json-template.html",
     "templates/new-page-templates",
     "other/preview-page"
-], function($, _, Backbone, Tutorial, PagesView, slideshowTemplate,
-            pagesTemplate, pageTemplate, tutorialJSONtemplate, loadJSONtemplate,
-            newPageTemplates, previewPage){
+], function($, _, Backbone, Tutorial, Page, PagesView, PageView,
+            SlideshowTemplate, tutorialJSONtemplate, loadJSONtemplate,
+            NewPageTemplates, PreviewPage){
     require(["json"]);
     //The view representing the whole tutorial
-    SlideShowView = Backbone.View.extend({
+    var SlideShowView = Backbone.View.extend({
         /**********************************************************************
          *                                                                    *
          * All views in OneRoomSchool will come with a hash of references to  *
-         * subviews and a Boolean variable isClosed that is used for keeping  *
+         *   subviews, a Boolean variable isClosed that is used for keeping   *
          *  track of whether or not a view has been removed and unbound from  *
-         *              events and can therefore be replaced.                 *
+         *  events and can therefore be replaced, and the root view's name in *
+         *           the window object for referencing the root view.         *
          *                                                                    *
          **********************************************************************/
         initialize: function(){
             this.model.bind("change", this.changeTitleHeader, this);
             this.subviews = {};
             this.isClosed = false;
+            this.rootName = "tutorialView";
             this.subviews.pagesView =
-                new PagesView({collection: this.model.get("pages")});
-            this.listenTo(Backbone, "open-page", this.openPage);
+                new PagesView({collection: this.model.get("pages"),
+                               rootName: this.rootName,
+                               root:     this});
+            this.listenTo(this, "open-page", this.openPage);
         },
         id: "slideshow",
-        template: _.template(slideshowTemplate),
+        template: _.template(SlideshowTemplate),
         events: {
             "click #save-title"      : "saveTitle",
             "click #edit-title"      : "editTitle",
@@ -74,7 +78,7 @@ define([
         /*All views in OneRoomSchool have a close method, which removes and
          *unbinds the view as well as closing all of the view's subviews.
          */
-        close: function(callback){
+       close: function(callback){
             var self = this;
             this.$el.fadeOut(400, function(){
                 self.closeSubviews();
@@ -91,6 +95,7 @@ define([
          */
         changeTitleHeader: function(){
             $("#title-header").html(this.model.get("title"));
+            $("#desc-header").html(this.model.get("desc"));
         },
         /*editTitle opens the "#set-title" box and hides the title header so
          *the user can edit the title and description of the Tutorial.
@@ -120,11 +125,11 @@ define([
          */
         openNewPage: function(e){
             //Select the template
-            var newPageTemplate=newPageTemplates[$(e.target).data("template")];
+            var newPageTemplate=NewPageTemplates[$(e.target).data("template")];
             $("#new-page-toolbar").slideUp(400, function(){
                 $("#current-page").html(newPageTemplate({pageType:
                     $(e.target).data("page-type")})).slideDown(400,function(){
-                        previewPage.setPreviewPage();
+                        PreviewPage.setPreviewPage();
                     });
             });
         },
@@ -148,32 +153,40 @@ define([
                 insertAt = Math.max((insertAt >= 0 &&
                                      insertAt <= pageList.length+1 ?
                                      insertAt-1 : pageList.length), 0);
-                newPageAttributes = {pageType: $(e.target).data("page-type"),
-                                       content: $("#new-page-content").val()};
-                                       
-                if(newPageAttributes["pageType"] == "text"){
-                    newPageAttributes["hasLaTeX"] =
-                        $("#has-LaTeX:checked").length == 1
-                }
-                /**************************************************************
+                newPageAttributes = {pageType : $(e.target).data("page-type"),
+                                     content  : $("#new-page-content").val()};
+
+               /***************************************************************
                 *                                                             *
                 *  If you are defining a page type that has attributes other  *
                 *   than "content" and "pageType", such as hasLaTeX in a text *
                 *    page or subpages in a code page, then add an additional  *
-                *  if statement here for your page type to add the attributes *
-                *                  to the newPageAttributes hash.             *
+                *  if statement like the one below for your page type to add  *
+                *        the attributes to the newPageAttributes hash.        *
                 *                                                             *
                 ***************************************************************/
-                pageList.add(new Page(newPageAttributes), {at:insertAt});
+                if(newPageAttributes["pageType"] == "text"){
+                    newPageAttributes["hasLaTeX"] =
+                        $("#has-LaTeX:checked").length == 1;
+                }
+
+                pageList.add(new Page.Page(newPageAttributes), {at:insertAt});
                 this.closeNewPage();
             }
         },
-        
+
+        /*openPage is called from the PagesView to open a Page view in the
+         *main slide show while closing any new page template or page view that
+         *was open.  openPage also sets the slide show view's "currentPageView"
+         *subview to the page view being opened.
+         */
         openPage: function(pageNumber){
             var pagesView = this.subviews.pagesView;
             var currentPageView = this.subviews.currentPageView;
             var pageToOpen = new PageView({
-                                   model: pagesView.collection.at(pageNumber)});
+                                   model: pagesView.collection.at(pageNumber),
+                                   rootName: this.rootName,
+                                   root: this});
             //A page was already open
             if(currentPageView != null && !currentPageView.isClosed){
                 currentPageView.close(function(){
